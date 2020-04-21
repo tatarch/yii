@@ -15,7 +15,7 @@ class m200421_194212_create_tasks_table extends Migration
         $this->createTable('{{%tasks}}', [
             'id' => $this->primaryKey(),
             'listId' => $this->integer()->notNull()->unsigned(),
-            'task' => $this->string(255)->notNull(),
+            'name' => $this->string(255)->notNull(),
             'goal' => $this->integer()->notNull()->unsigned(),
         ]);
     }
