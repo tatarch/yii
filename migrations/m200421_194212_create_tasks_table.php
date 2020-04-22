@@ -14,10 +14,18 @@ class m200421_194212_create_tasks_table extends Migration
     {
         $this->createTable('{{%tasks}}', [
             'id' => $this->primaryKey(),
-            'listId' => $this->integer()->notNull()->unsigned(),
+            'listId' => $this->integer()->notNull(),
             'name' => $this->string(255)->notNull(),
             'goal' => $this->integer()->notNull()->unsigned(),
         ]);
+
+        $this->addForeignKey(
+            'fk-tasks-listId',
+            'tasks',
+            'listId',
+            'lists',
+            'id'
+        );
     }
 
     /**
