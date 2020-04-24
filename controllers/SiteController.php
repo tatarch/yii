@@ -2,7 +2,6 @@
 
 namespace app\controllers;
 
-use app\models\TaskForm;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -83,14 +82,6 @@ class SiteController extends Controller
 
         $model->password = '';
         return $this->render('login', [
-            'model' => $model,
-        ]);
-    }
-
-    public function actionTable()
-    {
-        $model = new TaskForm();
-        return $this->render('createTable',  [
             'model' => $model,
         ]);
     }

@@ -1,16 +1,30 @@
 <?php
-/** @var \app\models\Lists[] $lists */
+/** @var \app\models\Lists $taskList */
 
-use yii\helpers\Html;
-use yii\widgets\LinkPager;
+
+use yii\widgets\ActiveForm;
+use unclead\multipleinput\MultipleInput;
+
 ?>
     <h1>Lists</h1>
-    <ul>
-        <?php foreach ($lists as $list): ?>
-            <li>
-                <?= Html::encode("({$list->name})") ?>:
+<?php $form = ActiveForm::begin(); ?>
 
-            </li>
-        <?php endforeach; ?>
-    </ul>
-
+<?= $form->field($model, 'tasks')->widget(MultipleInput::className(), [
+    'max' => 4,
+    'columns' => [
+        [
+            'name' => 'name',
+            'title' => 'User'
+        ],
+        [
+            'name' => 'goal',
+            'title' => 'Priority',
+            'enableError' => true,
+            'options' => [
+                'class' => 'input-priority'
+            ]
+        ]
+    ]
+]);
+?>
+<?php ActiveForm::end(); ?>

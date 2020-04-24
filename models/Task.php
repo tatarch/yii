@@ -12,7 +12,7 @@ use Yii;
  * @property string $name
  * @property int $goal
  */
-class Tasks extends \yii\db\ActiveRecord
+class Task extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}

@@ -3,13 +3,14 @@
 namespace app\models;
 
 use Yii;
-use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "lists".
  *
  * @property int $id
  * @property string|null $name
+ *
+ * @property Task[] $tasks
  */
 class Lists extends \yii\db\ActiveRecord
 {
@@ -40,5 +41,15 @@ class Lists extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Name',
         ];
+    }
+
+    /**
+     * Gets query for [[Tasks]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTasks()
+    {
+        return $this->hasMany(Task::className(), ['listId' => 'id']);
     }
 }

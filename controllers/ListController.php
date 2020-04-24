@@ -3,8 +3,8 @@
 
 namespace app\controllers;
 
+use app\models\TaskForm;
 use yii\web\Controller;
-use yii\data\Pagination;
 use app\models\Lists;
 
 class ListController extends Controller
@@ -13,11 +13,15 @@ class ListController extends Controller
     {
         $query = Lists::find();
 
+        $taskList = $query->one();
 
-        $lists = $query->orderBy('name')->all();
+        $model = new TaskForm();
+        $model->tasks = $taskList->tasks;
 
         return $this->render('index', [
-            'lists' => $lists,
+            'taskList' => $taskList,
+            'model' => $model
         ]);
     }
+
 }
