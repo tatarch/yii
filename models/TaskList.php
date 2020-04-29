@@ -1,18 +1,14 @@
 <?php
 
+
 namespace app\models;
-
-use Yii;
-
 /**
- * This is the model class for table "lists".
- *
- * @property int $id
- * @property string|null $name
+ * Class TaskList
+ * @package app\models
  *
  * @property Task[] $tasks
  */
-class Lists extends \yii\db\ActiveRecord
+class TaskList extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}

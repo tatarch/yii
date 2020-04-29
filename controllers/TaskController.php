@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\TaskListForm;
+use app\models\TaskList;
 use Yii;
 use app\models\Task;
 use app\models\TaskSearch;
@@ -65,6 +67,7 @@ class TaskController extends Controller
     public function actionCreate()
     {
         $model = new Task();
+        $lists = TaskList::find()->all();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -72,6 +75,7 @@ class TaskController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'lists' => $lists,
         ]);
     }
 
