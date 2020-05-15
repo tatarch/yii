@@ -1,35 +1,52 @@
 <?php
+
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use unclead\multipleinput\MultipleInput;
-/** @var \app\models\TaskList[] $taskList */
-/* @var $searchModel app\models\TaskListSearch */
+
+/* @var $this yii\web\View */
+/** @var \app\models\TaskListForm $model */
+
+$this->title = 'Task Lists';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
+<div class="task-list-index">
 
-<?php $form = ActiveForm::begin([
-    'action' => ['save'],
-]); ?>
+    <h1><?= Html::encode($this->title) ?></h1>
 
-<?= $form->field($taskList, 'tasks')->widget(MultipleInput::className(), [
-    'max' => 4,
-    'columns' => [
-        [
-            'name' => 'name',
-            'title' => 'Name'
-        ],
-        [
-            'name' => 'goal',
-            'title' => 'Goal',
-            'enableError' => true,
-            'options' => [
-                'class' => 'input-priority'
+    <p>
+        <?= Html::a('Create Task List', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
+
+    <?php $form = ActiveForm::begin([
+        'action' => ['update'],
+    ]); ?>
+
+    <?= $form->field($model, 'tasks')->widget(MultipleInput::className(), [
+
+        'columns' => [
+            [
+                'name' => 'name',
+                'title' => 'Name'
+            ],
+            [
+                'name' => 'goal',
+                'title' => 'Goal',
+                'enableError' => true,
+                'options' => [
+                    'class' => 'input-priority'
+                ]
             ]
         ]
-    ]
-]);
-?>
+    ]);
+    ?>
+
+    <?= $form->field($model, 'listId')->hiddenInput()->label(false); ?>
+
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
 
-<?php ActiveForm::end(); ?>
+    <?php ActiveForm::end(); ?>
+
+</div>

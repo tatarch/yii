@@ -36,12 +36,17 @@ class ListController extends Controller
      */
     public function actionIndex()
     {
-        $taskList = TaskList::find()->one();
+        $taskList = TaskList::find()->all();
+        $model = [];
+        foreach ($taskList as $list) {
 
-        $model = new TaskListForm();
-        $model->tasks = $taskList->tasks;
-        $model->listId = $taskList->id;
+            $modelTask = new TaskListForm();
+            $modelTask->tasks = $list->tasks;
+            $modelTask->countTasks = count($modelTask->tasks);
+            $modelTask->listId = $list->id;
 
+            $model[] = $modelTask;
+        }
         return $this->render('index', [
             'model' => $model,
         ]);
@@ -93,9 +98,8 @@ class ListController extends Controller
             return $this->redirect(['index']);
         }
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        Yii::$app->session->addFlash('error', 'Error');
+        return $this->redirect(['index']);
     }
 
     /**

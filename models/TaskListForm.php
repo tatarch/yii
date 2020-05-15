@@ -10,6 +10,7 @@ class TaskListForm extends Model
 {
     public $tasks;
     public $listId;
+    public $countTasks;
 
     public function rules()
     {
@@ -20,18 +21,29 @@ class TaskListForm extends Model
         ];
     }
 
+
     public function save()
     {
         $taskList = TaskList::findOne($this->listId);
-        foreach ($taskList->tasks as $task) {
-            $task->delete();
-        }
-        foreach ($this->tasks as $taskData) {
-            $task = new Task();
-            $task->listId = $this->listId;
-            $task->name = $taskData['name'];
-            $task->goal = $taskData['goal'];
-            $task->save();
+        $db = Yii::$app->db;
+        $transaction = $db->beginTransaction();
+
+        try {
+            foreach ($taskList->tasks as $task) {
+                $task->delete();
+            }
+            foreach ($this->tasks as $taskData) {
+                $task = new Task();
+                $task->listId = $this->listId;
+                $task->name = $taskData['name'];
+                $task->goal = $taskData['goal'];
+                $task->save();
+            }
+            $transaction->commit();
+
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            return false;
         }
 
         return true;

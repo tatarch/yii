@@ -7,6 +7,7 @@ use unclead\multipleinput\MultipleInput;
 /* @var $this yii\web\View */
 /** @var \app\models\TaskListForm $model */
 
+
 $this->title = 'Task Lists';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -17,35 +18,33 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Create Task List', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+    <?php foreach ($model as $mod): ?>
+        <?php $form = ActiveForm::begin(); ?>
 
-    <?php $form = ActiveForm::begin([
-        'action' => ['update'],
-    ]); ?>
-
-    <?= $form->field($model, 'tasks')->widget(MultipleInput::className(), [
-        'columns' => [
-            [
-                'name' => 'name',
-                'title' => 'Name'
-            ],
-            [
-                'name' => 'goal',
-                'title' => 'Goal',
-                'enableError' => true,
-                'options' => [
-                    'class' => 'input-priority'
+        <?= $form->field($mod, 'tasks')->widget(MultipleInput::className(), [
+            'min' => $mod['countTasks'],
+            'max' => $mod['countTasks'],
+            'addButtonPosition' => false,
+            'columns' => [
+                [
+                    'name' => 'name',
+                    'title' => 'Name'
+                ],
+                [
+                    'name' => 'goal',
+                    'title' => 'Goal',
+                    'enableError' => true,
+                    'options' => [
+                        'class' => 'input-priority'
+                    ]
                 ]
             ]
-        ]
-    ]);
-    ?>
+        ])->label(false);
+        ?>
 
-    <?= $form->field($model, 'listId')->hiddenInput()->label(false); ?>
+        <?= $form->field($mod, 'listId')->hiddenInput()->label(false); ?>
 
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
-    </div>
-
-    <?php ActiveForm::end(); ?>
+        <?php ActiveForm::end(); ?>
+    <?php endforeach; ?>
 
 </div>
