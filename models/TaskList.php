@@ -7,6 +7,8 @@ namespace app\models;
  * @package app\models
  *
  * @property Task[] $tasks
+ *  @property string $name
+ *  @property int $id
  */
 class TaskList extends \yii\db\ActiveRecord
 {

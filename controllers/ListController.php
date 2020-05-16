@@ -36,19 +36,10 @@ class ListController extends Controller
      */
     public function actionIndex()
     {
-        $taskList = TaskList::find()->all();
-        $model = [];
-        foreach ($taskList as $list) {
+        $taskLists = TaskList::find()->all();
 
-            $modelTask = new TaskListForm();
-            $modelTask->tasks = $list->tasks;
-            $modelTask->countTasks = count($modelTask->tasks);
-            $modelTask->listId = $list->id;
-
-            $model[] = $modelTask;
-        }
         return $this->render('index', [
-            'model' => $model,
+            'taskLists' => $taskLists,
         ]);
     }
 
@@ -58,12 +49,7 @@ class ListController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
+
 
     /**
      * Creates a new TaskList model.
@@ -75,7 +61,13 @@ class ListController extends Controller
         $model = new TaskList();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            $id = $model->getPrimaryKey();
+            $model = new TaskListForm();
+            $model->listId = $id;
+            return $this->render('addtasks', [
+                'model' => $model,
+                'id' => $id,
+            ]);
         }
 
         return $this->render('create', [
@@ -90,7 +82,20 @@ class ListController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate()
+    public function actionUpdate($id)
+    {
+        $taskList = TaskList::find()->where(['id' => $id])->one();
+
+        $model = new TaskListForm();
+        $model->tasks = $taskList->tasks;
+        $model->listId = $taskList->id;
+
+        return $this->render('tasks', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionSave()
     {
         $model = new TaskListForm();
 
@@ -98,7 +103,8 @@ class ListController extends Controller
             return $this->redirect(['index']);
         }
 
-        Yii::$app->session->addFlash('error', 'Error');
+//        Yii::$app->session->addFlash('error', 'Error');
+//        return $this->redirect(['index']);
         return $this->redirect(['index']);
     }
 

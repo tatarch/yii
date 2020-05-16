@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\TaskList */
+/** @var \app\models\TaskListForm $model */
 
 $this->title = 'Create Task List';
 $this->params['breadcrumbs'][] = ['label' => 'Task Lists', 'url' => ['index']];

@@ -10,7 +10,7 @@ class TaskListForm extends Model
 {
     public $tasks;
     public $listId;
-    public $countTasks;
+    public $name;
 
     public function rules()
     {

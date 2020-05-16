@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 use unclead\multipleinput\MultipleInput;
 
 /* @var $this yii\web\View */
-/** @var \app\models\TaskListForm $model */
+/** @var \app\models\TaskList[] $taskLists */
 
 
 $this->title = 'Task Lists';
@@ -18,12 +18,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Create Task List', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <?php foreach ($model as $mod): ?>
+    <?php foreach ($taskLists as $taskList): ?>
         <?php $form = ActiveForm::begin(); ?>
 
-        <?= $form->field($mod, 'tasks')->widget(MultipleInput::className(), [
-            'min' => $mod['countTasks'],
-            'max' => $mod['countTasks'],
+        <?= $form->field($taskList, 'tasks')->widget(MultipleInput::className(), [
+            'min' => count($taskList->tasks),
+            'max' => count($taskList->tasks),
             'addButtonPosition' => false,
             'columns' => [
                 [
@@ -39,10 +39,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]
                 ]
             ]
-        ])->label(false);
+        ])->label($taskList->name);
         ?>
 
-        <?= $form->field($mod, 'listId')->hiddenInput()->label(false); ?>
+        <?= $form->field($taskList, 'id')->hiddenInput()->label(false); ?>
+
+        <div class="form-group">
+            <a href="/web/list/update?id=<?= $taskList->id ?>">Update</a>
+        </div>
 
         <?php ActiveForm::end(); ?>
     <?php endforeach; ?>

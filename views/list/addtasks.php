@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 use unclead\multipleinput\MultipleInput;
 
 /* @var $this yii\web\View */
-/** @var \app\models\TaskListForm $model */
+/** @var \app\models\TaskList $model */
 
 $this->title = 'Task Lists';
 $this->params['breadcrumbs'][] = $this->title;
@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
 
     <?= $form->field($model, 'tasks')->widget(MultipleInput::className(), [
-
+        'allowEmptyList'    => false,
         'columns' => [
             [
                 'name' => 'name',
@@ -38,13 +38,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'class' => 'input-priority'
                 ]
             ],
-            [
-                'name' => 'isResolved',
-                'title' => 'isResolved',
-                'type' => 'checkbox',
-
-            ]
-
         ]
     ]);
     ?>
